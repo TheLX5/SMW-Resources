@@ -94,11 +94,11 @@ end:
     lda #$01
     sta $2250
     jsr draw_lives
-	jsr draw_yoshi_coins
-	jsr draw_bonus_stars
-	jsr draw_item_box
+    jsr draw_yoshi_coins
+    jsr draw_bonus_stars
+    jsr draw_item_box
     jsr draw_timer
-	jsr draw_coins
+    jsr draw_coins
     jsr draw_score
 +   
     rtl
@@ -466,40 +466,40 @@ ui_numbers:
 draw_ui_tile:
     phx 
     rep #$10
-	ldx !maxtile_pointer_max+0
-	cpx !maxtile_pointer_max+8
-	beq .no_slot
-	sta !maxtile_allocation_ram+$02,x
-	xba 
-	sta !maxtile_allocation_ram+$03,x
+    ldx !maxtile_pointer_max+0
+    cpx !maxtile_pointer_max+8
+    beq .no_slot
+    sta !maxtile_allocation_ram+$02,x
     xba 
-	lda $00
-	sta !maxtile_allocation_ram+$00,x
-	lda $01
-	sta !maxtile_allocation_ram+$01,x
-	dex #4
-	stx !maxtile_pointer_max+0
-	ldx !maxtile_pointer_max+2
-	lda $02
+    sta !maxtile_allocation_ram+$03,x
+    xba 
+    lda $00
+    sta !maxtile_allocation_ram+$00,x
+    lda $01
+    sta !maxtile_allocation_ram+$01,x
+    dex #4
+    stx !maxtile_pointer_max+0
+    ldx !maxtile_pointer_max+2
+    lda $02
     and #$03
-	sta !maxtile_allocation_ram,x
-	dex 
-	stx !maxtile_pointer_max+2
+    sta !maxtile_allocation_ram,x
+    dex 
+    stx !maxtile_pointer_max+2
 .no_slot
     sep #$10
     plx 
     rts
 
 mod_10:
-	sty $2251
+    sty $2251
     stz $2252
-	lda #$0A
-	sta $2253
-	stz $2254
-	nop #3
-	lda $2308
-	ldy $2306
-	rts 
+    lda #$0A
+    sta $2253
+    stz $2254
+    nop #3
+    lda $2308
+    ldy $2306
+    rts 
 
 scorecard_2:
     jsl scorecard
@@ -614,34 +614,34 @@ scorecard:
 
     rep #$10
     ldy $0F40|!addr
-	sty $2251
-	ldy.w #10000
-	sty $2253
-	nop #3
-	lda $2306
+    sty $2251
+    ldy.w #10000
+    sty $2253
+    nop #3
+    lda $2306
     sta $08
-	ldy $2308
+    ldy $2308
     sty $2251
-	ldy.w #1000
-	sty $2253
-	nop #3
-	lda $2306
+    ldy.w #1000
+    sty $2253
+    nop #3
+    lda $2306
     sta $09
-	ldy $2308
+    ldy $2308
     sty $2251
-	ldy.w #100
-	sty $2253
-	nop #3
-	lda $2306
+    ldy.w #100
+    sty $2253
+    nop #3
+    lda $2306
     sta $0A
-	ldy $2308
+    ldy $2308
     sty $2251
-	ldy.w #10
-	sty $2253
-	nop #3
-	lda $2306
+    ldy.w #10
+    sty $2253
+    nop #3
+    lda $2306
     sta $0B
-	lda $2308
+    lda $2308
     sta $0C
     sep #$10
 
@@ -864,49 +864,49 @@ org $05CEC6
 
 ;-------------------------------------------------------
 
-org $0081F4			; JSR $008DAC
-	BRA + : NOP : +
-org $0082E8			; JSR $008DAC
-	BRA + : NOP : +
-org $00A5A8			; JSR $008CFF
-	BRA + : NOP : +
-org $00985A			; JSR $008CFF
-	BRA + : NOP : +
-org $00A2D5			; JSR $008E1A
+org $0081F4            ; JSR $008DAC
     BRA + : NOP : +
-org $00A5D5			; JSR $008E1A
+org $0082E8            ; JSR $008DAC
     BRA + : NOP : +
-	
-	
-org $008275			; this one nukes the IRQ
-	JMP NMI_hijack
+org $00A5A8            ; JSR $008CFF
+    BRA + : NOP : +
+org $00985A            ; JSR $008CFF
+    BRA + : NOP : +
+org $00A2D5            ; JSR $008E1A
+    BRA + : NOP : +
+org $00A5D5            ; JSR $008E1A
+    BRA + : NOP : +
+    
+    
+org $008275            ; this one nukes the IRQ
+    JMP NMI_hijack
 
 org $008C81
 NMI_hijack:
-	LDA $0D9B|!addr
-	BNE .special
-	if !sa1
-		LDX #$81		; don't do IRQ (lated stored to $4200)
-	else
-		LDA #$81		; don't do IRQ
-		STA $4200
-	endif
-	LDA $22			; update mirrors
-	STA $2111
-	LDA $23
-	STA $2111
-	LDA $24
-	STA $2112
-	LDA $25
-	STA $2112
-	LDA $3E
-	STA $2105
-	LDA $40
-	STA $2131
-	JMP $82B0
-	
+    LDA $0D9B|!addr
+    BNE .special
+    if !sa1
+        LDX #$81        ; don't do IRQ (lated stored to $4200)
+    else
+        LDA #$81        ; don't do IRQ
+        STA $4200
+    endif
+    LDA $22            ; update mirrors
+    STA $2111
+    LDA $23
+    STA $2111
+    LDA $24
+    STA $2112
+    LDA $25
+    STA $2112
+    LDA $3E
+    STA $2105
+    LDA $40
+    STA $2131
+    JMP $82B0
+    
 .special
-	JMP $827A	
+    JMP $827A    
 
     print pc
     warnpc $009012
