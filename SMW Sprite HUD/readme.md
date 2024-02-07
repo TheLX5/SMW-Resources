@@ -1,5 +1,5 @@
 ## SMW Sprite HUD
-Recreation of SMW's HUD in UberASM (+ minor patches)
+Recreation of SMW's HUD in UberASM (+ minor patches). Includes status bar and the level end display. Mode 7 bosses were not tested.
 
 Version 1.0
 
